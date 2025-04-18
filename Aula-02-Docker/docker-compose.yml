@@ -1,0 +1,36 @@
+services:
+
+ jupyter:
+   image: jupyter/datascience-notebook:latest
+   ports:
+     - "8888:8888"
+   volumes:
+     - ".\notebooks:/home/jovyan/work"
+   networks:
+     - minha-rede
+
+ postgres:
+   image: postgres:13
+   environment:
+     POSTGRES_USER: user
+     POSTGRES_PASSWORD: senha
+     POSTGRES_DB: data_db
+   volumes:
+     - postgres-data:/var/lib/postgresql/data
+   networks:
+     - minha-rede
+
+ adminer:
+   image: adminer:latest
+   ports:
+     - "8080:8080"
+   depends_on:
+     - postgres
+   networks:
+     - minha-rede
+
+volumes:
+ postgres-data:
+
+networks:
+ minha-rede:
