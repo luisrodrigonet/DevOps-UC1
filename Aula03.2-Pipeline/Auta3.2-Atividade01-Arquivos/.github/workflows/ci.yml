@@ -1,0 +1,36 @@
+name: Pipeline Completo
+on: [push]
+
+jobs:
+  validar-dados:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar Dependências
+        run: pip install pandas matplotlib  # Adicionado matplotlib para gráficos
+
+      - name: Validar Dados
+        run: python validar_dados.py
+
+      - name: Gerar Relatório e Gráfico
+        run: |
+          python gerar_relatorio.py
+          python gerar_grafico.py
+          # Renomeia os arquivos com o hash do commit para evitar conflitos
+          mv relatorio.html relatorio-${{ github.sha }}.html
+          mv grafico.png grafico-${{ github.sha }}.png
+
+      - name: Upload Artefatos
+        uses: actions/upload-artifact@v4  # Versão mais recente (v4)
+        with:
+          name: artefatos-processados
+          path: |
+            relatorio-*.html
+            grafico-*.png

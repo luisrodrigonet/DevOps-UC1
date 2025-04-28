@@ -1,0 +1,11 @@
+variable "jupyter_name" { default = "jupyter-notebook" }
+variable "jupyter_port" { default = 8888 }
+variable "postgres_name" { default = "postgres-db" }
+variable "postgres_port" { default = 5432 }
+variable "db_user" { default = "admin" }
+variable "db_password" { default = "password" }
+variable "db_name" { default = "analytics" }
+variable "minio_name" { default = "minio-storage" }
+variable "minio_port" { default = 9000 }
+variable "minio_access_key" { default = "minioadmin" }
+variable "minio_secret_key" { default = "minioadmin" }
